@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Http;
 class RickAndMortyInitDataController extends Controller
 {
     private $DefaultURL = 'https://rickandmortyapi.com/api';
+    private $ModelType; //characters, locations, episodes
 
     /**
      * Rick és Morty
@@ -23,7 +24,8 @@ class RickAndMortyInitDataController extends Controller
         try {
             $MainURLList = $this->GetDataFromURL($this->DefaultURL);
             foreach ($MainURLList as $key => $url) {
-                $this->ProcessedDataFromURLAndStore($url, $key);
+                $this->ModelType = $key;
+                $this->ProcessedDataFromURL($url);
             }
         } catch (Exception $exception) {
             throw $exception;
@@ -49,23 +51,35 @@ class RickAndMortyInitDataController extends Controller
      * Az adatok feldolgozása és a tárolásuk meghívása
      * Ha az adatok infóban van következő oldal akkor a következő oldal URL-el meghívja önmagát
      * @param string $url #Az URL amit meghívunk, a vissza kapott adatokat feldogozzuk és tároljuk
-     * @param string $type #Ez alapján dől el hogy melyik táblába kerül az adat
      */
-    private function ProcessedDataFromURLAndStore(string $url, string $type)
+    private function ProcessedDataFromURL(string $url)
     {
         try {
             $data = $this->GetDataFromURL($url);
             foreach ($data->results as $result) {
-                if ($type == 'characters') {
-                    $this->CreateCharacter($result);
-                } else if ($type == 'locations') {
-                    $this->CreateLocation($result);
-                } else if ($type == 'episodes') {
-                    $this->CreateEpisode($result);
-                }
+                $this->StoreData($result);
             }
             if ($data->info->next)
-                $this->ProcessedDataFromURLAndStore($data->info->next, $type);
+                $this->ProcessedDataFromURL($data->info->next);
+        } catch (Exception $exception) {
+            throw $exception;
+        }
+    }
+
+    /**
+     * Az adat tárolása a típus alapján, a típus dönti el hogy melyik táblába kerül
+     * @param object $NewRecord
+     */
+    private function StoreData(object $NewRecord)
+    {
+        try {
+            if ($this->ModelType == 'characters') {
+                $this->CreateCharacter($NewRecord);
+            } else if ($this->ModelType == 'locations') {
+                $this->CreateLocation($NewRecord);
+            } else if ($this->ModelType == 'episodes') {
+                $this->CreateEpisode($NewRecord);
+            }
         } catch (Exception $exception) {
             throw $exception;
         }
