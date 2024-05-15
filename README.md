@@ -20,6 +20,6 @@
 
 A feladat végrhajtása körül belül 11 órát vett igénybe:
 - Adatbázis megtervezés, modellek és migrációk elkészítése ~2 óra
-- Back-end elkészítése (adat szinkron, feldogozás, formázás és megjelenítés) ~4 óra
-- Front-end elkészítése Pluginek beépítése, Front-end elkészítése (design, scriptek, adat manipuláció)  ~4 óra
+- Back-end elkészítése ~3 óra
+- Front-end elkészítése Pluginek beépítése, Front-end elkészítése (design, scriptek, adat manipuláció)  ~5 óra
 - Finomítások, refactor ~1 óra

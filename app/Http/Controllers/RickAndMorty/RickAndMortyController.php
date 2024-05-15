@@ -10,7 +10,6 @@ use App\Models\RickAndMorty\EpisodesCharacters;
 use App\Models\RickAndMorty\Locations;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 
 class RickAndMortyController extends Controller implements RickAndMortyInterface
 {
