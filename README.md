@@ -4,6 +4,7 @@
     Felhasználó név és jelszó
 3. Console/Terminal parancsok futtatása sorban
     composer update
+    php artisan key:generate
     php artisan make:database {databasename} 
     php artisan migrate
     php artisan optimize:clear
